@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1, h3 {
+            color: #333;
+        }
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f3f3f3;
+            border-left: 4px solid #007BFF;
+            border-radius: 5px;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+        .feedback {
+            background-color: #fff8dc;
+            padding: 20px;
+            border-left: 6px solid #ffc107;
+            margin-top: 30px;
+            white-space: pre-wrap;
+            border-radius: 5px;
+        }
+        .score {
+            font-size: 1.2rem;
+            background-color: #e1f7d5;
+            padding: 10px;
+            display: inline-block;
+            border-left: 6px solid #28a745;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Quiz Submission Report</h1>
+
+        {% for i in range(quiz|length) %}
+            <div class="question-block">
+                <p><strong>Question {{ i+1 }}:</strong> {{ quiz[i].text }}</p>
+
+                {% if quiz[i].user_text == quiz[i].correct_text %}
+                    <p class="correct">✅ Your Answer: {{ quiz[i].user_text }}</p>
+                {% else %}
+                    <p class="incorrect">❌ Your Answer: 
+                        {{ quiz[i].user_text if quiz[i].user_text else 'Not answered or invalid' }}
+                    </p>
+                    <p><strong>Correct Answer:</strong> {{ quiz[i].correct_text }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if score is not none %}
+            <div class="score">
+                🎯 Your Score: {{ score }} / {{ quiz|length }}
+            </div>
+        {% endif %}
+
+        {% if feedback %}
+            <div class="feedback">
+                <h3>🧠 Feedback & Recommendations:</h3>
+                {{ feedback | safe }}
+            </div>
+        {% else %}
+            <div class="feedback">
+                <h3>🧠 Feedback:</h3>
+                <p>No feedback available.</p>
+            </div>
+        {% endif %}
+
+        <p style="margin-top: 40px;">✅ Thank you for completing the quiz. Your responses have been recorded.</p>
+    </div>
+</body>
+</html>

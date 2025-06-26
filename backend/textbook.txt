@@ -1,0 +1,46 @@
+Chapter 1: Acids and Bases
+
+Acids are substances that release hydrogen ions (H⁺) in an aqueous solution. They have a sour taste and turn blue litmus paper red. Examples of common acids include hydrochloric acid (HCl), sulfuric acid (H₂SO₄), and nitric acid (HNO₃).
+
+Bases are substances that release hydroxide ions (OH⁻) in solution. They have a bitter taste and slippery feel, and they turn red litmus paper blue. Examples include sodium hydroxide (NaOH), potassium hydroxide (KOH), and calcium hydroxide (Ca(OH)₂).
+
+The strength of an acid or base is determined by how completely it dissociates in water. Strong acids like HCl dissociate completely, while weak acids like acetic acid (CH₃COOH) do not.
+
+The pH scale is used to measure the acidity or basicity of a solution. A pH less than 7 indicates an acid, greater than 7 indicates a base, and a pH of 7 is neutral.
+
+Neutralization is a chemical reaction in which an acid reacts with a base to form salt and water. For example:
+
+HCl + NaOH → NaCl + H₂O
+
+Chapter 2: Chemical Reactions
+
+A chemical reaction is a process in which one or more substances (reactants) are converted into one or more new substances (products).
+
+There are several types of chemical reactions:
+1. Combination Reaction: Two or more substances combine to form a new substance.
+   Example: 2H₂ + O₂ → 2H₂O
+
+2. Decomposition Reaction: A single compound breaks down into two or more simpler substances.
+   Example: 2HgO → 2Hg + O₂
+
+3. Displacement Reaction: One element displaces another from a compound.
+   Example: Zn + CuSO₄ → ZnSO₄ + Cu
+
+4. Double Displacement Reaction: Exchange of ions between two compounds.
+   Example: Na₂SO₄ + BaCl₂ → BaSO₄ + 2NaCl
+
+5. Combustion Reaction: A substance reacts with oxygen to produce heat and light.
+   Example: CH₄ + 2O₂ → CO₂ + 2H₂O
+
+Chemical equations must be balanced to follow the law of conservation of mass, which states that mass is neither created nor destroyed during a chemical reaction.
+
+Chapter 3: Metals and Non-Metals
+
+Metals are elements that are generally solid, lustrous, malleable, ductile, and good conductors of heat and electricity. Examples include iron, copper, and aluminum.
+
+Non-metals are elements that lack the properties of metals. They are generally poor conductors, brittle when solid, and have no metallic luster. Examples include sulfur, oxygen, and carbon.
+
+When metals react with acids, they release hydrogen gas and form salts.
+Example: Zn + 2HCl → ZnCl₂ + H₂↑
+
+Metals also form basic oxides, while non-metals form acidic oxides.

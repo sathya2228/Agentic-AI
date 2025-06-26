@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Lesson Plan Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📚 AI Lesson Plan Generator</h1>
+        <form method="POST" action="/send_quiz">
+            <label>Subject:</label>
+            <input type="text" name="subject" required>
+
+            <label>Grade:</label>
+            <input type="text" name="grade" required>
+
+            <label>Topic:</label>
+            <input type="text" name="topic" required>
+
+            <label>Duration (e.g., 5 days @ 45 mins):</label>
+            <input type="text" name="duration" required>
+
+            <label>How many questions for the quiz?</label>
+            <input type="number" name="num_questions" min="1" max="10" value="5" required>
+
+            <label>Send Quiz Link to Email:</label>
+            <input type="email" name="email" required>
+
+            <button type="submit">Generate & Send Quiz</button>
+        </form>
+    </div>
+</body>
+</html>
