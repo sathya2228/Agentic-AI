@@ -1,64 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Generated Lesson Plan</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        .question-block {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #f4f4f4;
-            border-left: 4px solid #007BFF;
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/result-style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>✅ Generated Lesson Plan</h1>
-        <p>
-            <strong>Subject:</strong> {{ result.subject }} |
-            <strong>Grade:</strong> {{ result.grade }} |
-            <strong>Topic:</strong> {{ result.topic }} |
-            <strong>Duration:</strong> {{ result.duration }}
-        </p>
+    <div class="wrapper">
+        <div class="card">
+            <h1>✅ Generated Lesson Plan</h1>
+            <p class="summary">
+                <strong>Subject:</strong> {{ result.subject }} |
+                <strong>Grade:</strong> {{ result.grade }} |
+                <strong>Topic:</strong> {{ result.topic }} |
+                <strong>Duration:</strong> {{ result.duration }}
+            </p>
 
-        <div class="section">
-            <h2>📘 Lesson</h2>
-            <div class="markdown-content">{{ result.lesson | safe }}</div>
-        </div>
+            <div class="section">
+                <h2>📘 Lesson</h2>
+                <div class="markdown-content">{{ result.lesson | safe }}</div>
+            </div>
 
-        <div class="section">
-            <h2>🔍 RAG Facts</h2>
-            <div class="markdown-content">{{ result.rag_facts | safe }}</div>
-        </div>
+            <div class="section">
+                <h2>🔍 RAG Facts</h2>
+                <div class="markdown-content">{{ result.rag_facts | safe }}</div>
+            </div>
 
-        <div class="section">
-            <h2>📝 Quiz</h2>
-            {% for question in result.quiz %}
-                <div class="question-block">
-                    <p><strong>{{ question.text }}</strong></p>
-                    <ul>
-                        {% for option in question.options %}
-                            <li>{{ option }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
-        </div>
+            <div class="section">
+                <h2>📝 Quiz</h2>
+                {% for question in result.quiz %}
+                    <div class="question-block">
+                        <p><strong>{{ question.text }}</strong></p>
+                        <ul>
+                            {% for option in question.options %}
+                                <li>{{ option }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
 
-        <div class="section">
-            <h2>🎯 Tone Adjusted Lesson</h2>
-            <div class="markdown-content">{{ result.tone_adjusted | safe }}</div>
-        </div>
+            <div class="section">
+                <h2>🎯 Tone Adjusted Lesson</h2>
+                <div class="markdown-content">{{ result.tone_adjusted | safe }}</div>
+            </div>
 
-        <!-- Feedback analysis is hidden from staff view -->
-        <!--
-        <div class="section">
-            <h2>📊 Feedback Analysis</h2>
-            <div class="markdown-content">{{ result.analysis | safe }}</div>
+            <!-- Feedback analysis is hidden
+            <div class="section">
+                <h2>📊 Feedback Analysis</h2>
+                <div class="markdown-content">{{ result.analysis | safe }}</div>
+            </div>
+            -->
         </div>
-        -->
     </div>
 </body>
 </html>
