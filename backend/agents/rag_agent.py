@@ -9,8 +9,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmb
 GEMINI_API_KEY = "AIzaSyDNRLCtqbaiLXEzRr0QPwEq-PejPUtCa94"
 
 # 📁 Paths
-INDEX_DIR = "D:/AgenticAI/Agentic-AI/backend/vectorstore/faiss_index"
-PDF_PATH = "D:/AgenticAI/Agentic-AI/backend/documents/knowledge.pdf"
+INDEX_DIR = "D:/Sathya/June/26-6-2025/Agentic-AI/backend/vectorstore/faiss_index"
+PDF_PATH = "D:/Sathya/June/26-6-2025/Agentic-AI/backend/documents/knowledge.pdf"
 
 # ✅ Load or build FAISS retriever
 def load_or_build_vectorstore():
