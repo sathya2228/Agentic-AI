@@ -1,7 +1,7 @@
 # Agentic AI Lesson & Quiz Platform
 
 An intelligent educational platform that dynamically generates lesson plans, quizzes, and personalized feedback for students.  
-Built with Python (Flask),  LangGraph,  Gemini Generative AI, and 🗃 MongoDB.  
+Built with Python (Flask),  LangGraph,  Gemini Generative AI, and  MongoDB.  
 Includes automatic email delivery, feedback analysis, and factual validation using RAG (Retrieval-Augmented Generation).
 
 ---
@@ -36,7 +36,7 @@ Includes automatic email delivery, feedback analysis, and factual validation usi
 
 ```bash
 # Clone the repository
-git clone https://github.com/sathya/agentic-ai.git
+git clone https://github.com/sathya2228/agentic-ai.git
 cd agentic-ai
 
 # (Recommended) Create virtual environment
