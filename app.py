@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for
 from backend.agents.langgraph_agent_flow import run_lesson_flow
-from backend.quiz.quiz_storage import save_quiz, get_quiz
+from backend.quiz.mango_storage import save_quiz, get_quiz    # ✅ single correct import
 from backend.quiz.email_sender import send_quiz_email
 import markdown
 
@@ -38,7 +38,6 @@ def send_quiz():
 
 
 def enrich_question(q, user_ans):
-    """Adds formatted correct and user answer texts."""
     options = q.get('options', [])
     correct_letter = q.get('answer', '').strip().lower()
     correct_index = ord(correct_letter) - ord('a')
@@ -49,12 +48,9 @@ def enrich_question(q, user_ans):
     )
 
     user_ans_clean = user_ans.strip().lower()
-
-    # Case 1: User answered a letter like 'a', 'b', etc.
     if len(user_ans_clean) == 1 and 'a' <= user_ans_clean <= chr(ord('a') + len(options) - 1):
         user_index = ord(user_ans_clean) - ord('a')
         q['user_text'] = f"{user_ans_clean.upper()}) {options[user_index]}"
-    # Case 2: User answered full text like "Water"
     elif user_ans_clean in [opt.lower() for opt in options]:
         user_index = [opt.lower() for opt in options].index(user_ans_clean)
         q['user_text'] = f"{chr(ord('A') + user_index)}) {options[user_index]}"
@@ -89,7 +85,6 @@ def take_quiz(quiz_id):
     if request.method == 'POST':
         responses = [request.form.get(f'q{i+1}', '').strip().lower() for i in range(len(quiz))]
 
-        # Call the backend agent to evaluate answers and generate feedback
         feedback_result = run_lesson_flow(
             subject="",
             grade="",
@@ -106,7 +101,7 @@ def take_quiz(quiz_id):
         score = feedback_result.get("score", 0)
         feedback_text = feedback_result.get("feedback_report", "No feedback available.")
 
-        # Save results
+        # ✅ Save results to MongoDB
         save_quiz(
             quiz_questions=quiz,
             email=quiz_data["email"],

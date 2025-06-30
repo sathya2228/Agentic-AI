@@ -6,9 +6,9 @@ import re
 import json
 
 # ✅ Gemini API Setup
-GEMINI_API_KEY = "AIzaSyAOuG6ZCzHe8BwNwJIk_KH5VCRGIvbhYWU"  # Replace with a valid API key
+GEMINI_API_KEY = "AIzaSyDNRLCtqbaiLXEzRr0QPwEq-PejPUtCa94"  # Replace this with your actual API key
 llm = ChatGoogleGenerativeAI(
-    model="models/gemini-1.5-flash",
+    model="models/gemini-2.0-flash",
     google_api_key=GEMINI_API_KEY
 )
 
@@ -74,7 +74,7 @@ a) ...
 b) ...
 c) ...
 d) ...
-Answer: <correct option letter>
+Answer: <correct option letter>) <correct option text>
 
 Lesson:
 {state['lesson']}
@@ -83,25 +83,43 @@ Lesson:
     raw_quiz = response.content
 
     questions = []
-    blocks = re.findall(
-        r"(Question\s*\d+:.*?)(?=\nQuestion\s*\d+:|\Z)", raw_quiz.strip(), re.DOTALL
-    )
+    blocks = re.findall(r"(Question\s*\d+:.*?)(?=\nQuestion\s*\d+:|\Z)", raw_quiz.strip(), re.DOTALL)
 
     for block in blocks:
         lines = block.strip().split("\n")
         question_line = next((line for line in lines if line.lower().startswith("question")), "")
         options = [line.strip() for line in lines if re.match(r"^[a-dA-D]\)", line.strip())]
         answer_line = next((line for line in lines if "Answer" in line), "")
-        match = re.search(r"([a-dA-D])", answer_line)
-        correct_letter = match.group(1).lower() if match else "a"
 
-        clean_options = [re.sub(r"^[a-dA-D]\)\s*", "", opt) for opt in options]
+        clean_options = [re.sub(r"^[a-dA-D]\)\s*", "", opt).strip() for opt in options]
+
+        # Extract answer letter
+        match_letter = re.search(r"Answer\s*:\s*([a-dA-D])", answer_line)
+        correct_letter = match_letter.group(1).lower() if match_letter else None
+
+        # Extract answer text
+        match_text = re.search(r"Answer\s*:\s*[a-dA-D]\)\s*(.*)", answer_line)
+        answer_text = match_text.group(1).strip() if match_text else ""
+
+        # Try to validate if letter points to the correct option
+        correct_index = ord(correct_letter) - ord('a') if correct_letter else 0
+        correct_option_text = clean_options[correct_index] if 0 <= correct_index < len(clean_options) else ""
+
+        # If extracted text and indexed option don't match, fix by matching text
+        if answer_text and answer_text.lower() != correct_option_text.lower():
+            try:
+                fixed_index = [opt.lower() for opt in clean_options].index(answer_text.lower())
+                correct_letter = chr(ord('a') + fixed_index)
+                correct_option_text = clean_options[fixed_index]
+            except ValueError:
+                pass  # Keep previous values
 
         if question_line and clean_options and len(clean_options) >= 4:
             questions.append({
                 "text": question_line.strip(),
                 "options": clean_options,
-                "answer": correct_letter
+                "answer": correct_letter,
+                "answer_text": correct_option_text
             })
 
     if not questions:
@@ -109,6 +127,7 @@ Lesson:
 
     state["quiz"] = questions
     return state
+
 
 # ✅ Agent 3: Tone Adapter
 def tone_adapter_agent(state: LessonState) -> LessonState:
@@ -133,7 +152,7 @@ def rag_agent(state: LessonState) -> LessonState:
     state["rag_facts"] = verified_info
     return state
 
-# ✅ Agent 5: Feedback and Scoring (Updated)
+# ✅ Agent 5: Feedback and Scoring
 def feedback_analysis_agent(state: LessonState) -> LessonState:
     student_answers = state.get("student_answers", [])
 
@@ -147,23 +166,34 @@ def feedback_analysis_agent(state: LessonState) -> LessonState:
         state["feedback_report"] = "⚠️ No student answers submitted."
         return state
 
-    correct_answers = [q["answer"].strip().lower() for q in state["quiz"]]
     score = 0
     mistakes = []
 
     for i, (q, student_ans) in enumerate(zip(state["quiz"], student_answers)):
         student_clean = student_ans.strip().lower()
-        correct_letter = correct_answers[i]
-
         options = q.get("options", [])
+        correct_letter = q["answer"].strip().lower()
+        correct_text = q.get("answer_text", "").strip().lower()
+
         matched_letter = None
+        matched_text = None
 
         if len(student_clean) == 1 and student_clean in ['a', 'b', 'c', 'd']:
             matched_letter = student_clean
-        elif student_clean in [opt.lower() for opt in options]:
-            matched_letter = chr(ord('a') + [opt.lower() for opt in options].index(student_clean))
+            matched_index = ord(matched_letter) - ord('a')
+            if matched_index < len(options):
+                matched_text = options[matched_index].strip().lower()
+        else:
+            try:
+                matched_index = [opt.lower() for opt in options].index(student_clean)
+                matched_letter = chr(ord('a') + matched_index)
+                matched_text = student_clean
+            except ValueError:
+                matched_letter = None
 
-        if matched_letter == correct_letter:
+        is_correct = (matched_letter == correct_letter)
+
+        if is_correct:
             score += 1
         else:
             student_display = (
@@ -173,28 +203,30 @@ def feedback_analysis_agent(state: LessonState) -> LessonState:
             )
             mistakes.append({
                 "question": q["text"],
-                "correct": f"{correct_letter.upper()}) {options[ord(correct_letter) - ord('a')]}",
+                "correct": f"{correct_letter.upper()}) {q['answer_text']}",
                 "student": student_display
             })
 
     state["score"] = score
 
     feedback_prompt = f"""
-The student attempted a quiz of {len(correct_answers)} questions and scored {score}.
+The student attempted a quiz of {len(state['quiz'])} questions and scored {score}.
 
 Here are the mistakes:
 {json.dumps(mistakes, indent=2)}
 
-Write a short feedback report with strengths, areas for improvement, and suggestions to prepare better.
+Write a feedback report with:
+- Strengths
+- Areas for Improvement
+- Suggestions for study
 """
     feedback = llm.invoke(feedback_prompt).content
     state["analysis"] = feedback
     state["feedback_report"] = feedback
     return state
 
-# ✅ Build LangGraph
+# ✅ LangGraph Setup
 builder = StateGraph(LessonState)
-
 builder.add_node("ContentGenerator", content_generator_agent)
 builder.add_node("QuizGenerator", quiz_generator_agent)
 builder.add_node("ToneAdapter", tone_adapter_agent)
@@ -210,7 +242,7 @@ builder.add_edge("AnalysisAgent", END)
 
 graph = builder.compile()
 
-# ✅ Entry Function
+# ✅ Entry Point Function
 def run_lesson_flow(subject: str, grade: str, topic: str, duration: str, num_questions: int,
                     student_answers: list = [], existing_quiz: list = []):
     initial_state = {

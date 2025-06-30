@@ -1,33 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>AI Lesson Plan Generator</title>
     <link rel="stylesheet" href="/static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="container">
-        <h1>📚 AI Lesson Plan Generator</h1>
-        <form method="POST" action="/send_quiz">
-            <label>Subject:</label>
-            <input type="text" name="subject" required>
-
-            <label>Grade:</label>
-            <input type="text" name="grade" required>
-
-            <label>Topic:</label>
-            <input type="text" name="topic" required>
-
-            <label>Duration (e.g., 5 days @ 45 mins):</label>
-            <input type="text" name="duration" required>
-
-            <label>How many questions for the quiz?</label>
-            <input type="number" name="num_questions" min="1" max="10" value="5" required>
-
-            <label>Send Quiz Link to Email:</label>
-            <input type="email" name="email" required>
-
-            <button type="submit">Generate & Send Quiz</button>
-        </form>
+    <div class="wrapper">
+        <div class="card">
+            <h2>📘 AI Lesson Plan Generator</h2>
+            <form method="POST" action="/send_quiz">
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" name="subject" placeholder="e.g., Science" required>
+                </div>
+                <div class="form-group">
+                    <label>Grade</label>
+                    <input type="text" name="grade" placeholder="e.g., 5" required>
+                </div>
+                <div class="form-group">
+                    <label>Topic</label>
+                    <input type="text" name="topic" placeholder="e.g., Photosynthesis" required>
+                </div>
+                <div class="form-group">
+                    <label>Duration</label>
+                    <input type="text" name="duration" placeholder="e.g., 8 hours" required>
+                </div>
+                <div class="form-group">
+                    <label>How many questions for the quiz?</label>
+                    <input type="number" name="num_questions" placeholder="e.g., 5" min="1" max="10" required>
+                </div>
+                <div class="form-group">
+                    <label>Send Quiz Link to Email</label>
+                    <input type="email" name="email" placeholder="e.g., you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Generate & Send Quiz</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

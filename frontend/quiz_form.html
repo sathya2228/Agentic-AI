@@ -2,23 +2,87 @@
 <html>
 <head>
     <title>Take Quiz</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            background-color: white;
+            max-width: 700px;
+            width: 100%;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+        }
+
+        .question-block p {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        button[type="submit"] {
+            background-color: #FFCC00;
+            color: black;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #e6b800;
+        }
+    </style>
 </head>
 <body>
-    <h1>📝 Take Your Quiz</h1>
-    <form method="POST">
-        {% for q in quiz %}
-            <div>
-                <p><strong>Question {{ loop.index }}:</strong> {{ q.text }}</p>
-                {% set q_index = loop.index %}
-                {% for opt in q.options %}
-                    <label>
-                        <input type="radio" name="q{{ q_index }}" value="{{ opt }}"> {{ opt }}
-                    </label><br>
-                {% endfor %}
-            </div>
-            <br>
-        {% endfor %}
-        <button type="submit">Submit Quiz</button>
-    </form>
+    <div class="quiz-container">
+        <h1>📝 Take Your Quiz</h1>
+        <form method="POST">
+            {% for q in quiz %}
+                <div class="question-block">
+                    <p><strong>Question {{ loop.index }}:</strong> {{ q.text }}</p>
+                    {% set q_index = loop.index %}
+                    {% for opt in q.options %}
+                        <label>
+                            <input type="radio" name="q{{ q_index }}" value="{{ opt }}" required> {{ opt }}
+                        </label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit">Submit Quiz</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -5,48 +5,111 @@
     <link rel="stylesheet" href="/static/style.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
         }
+
         .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
+            max-width: 920px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+            padding: 40px 50px;
         }
-        h1, h3 {
-            color: #333;
+
+        h1 {
+            font-size: 30px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 35px;
         }
+
         .question-block {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f3f3f3;
-            border-left: 4px solid #007BFF;
-            border-radius: 5px;
+            margin-bottom: 30px;
+            padding: 20px 25px;
+            background-color: #f7f9fc;
+            border-left: 5px solid #007bff;
+            border-radius: 10px;
         }
+
+        .question-block p {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
         .correct {
-            color: green;
-            font-weight: bold;
+            color: #28a745;
+            font-weight: 600;
+            font-size: 16px;
         }
+
         .incorrect {
-            color: red;
-            font-weight: bold;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 16px;
         }
-        .feedback {
-            background-color: #fff8dc;
-            padding: 20px;
-            border-left: 6px solid #ffc107;
-            margin-top: 30px;
-            white-space: pre-wrap;
-            border-radius: 5px;
-        }
+
         .score {
-            font-size: 1.2rem;
-            background-color: #e1f7d5;
-            padding: 10px;
-            display: inline-block;
+            font-size: 20px;
+            margin-top: 30px;
+            background-color: #eafbe7;
+            color: #155724;
             border-left: 6px solid #28a745;
-            border-radius: 5px;
-            margin-top: 15px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .feedback {
+            background-color: #fff9e6;
+            padding: 25px 30px;
+            border-left: 6px solid #ffc107;
+            margin-top: 35px;
+            white-space: pre-wrap;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+        }
+
+        .feedback h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #444;
+        }
+
+        .footer-msg {
+            margin-top: 50px;
+            text-align: center;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .emoji {
+            font-size: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .question-block {
+                padding: 15px;
+            }
+
+            .feedback {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -64,7 +127,7 @@
                     <p class="incorrect">❌ Your Answer: 
                         {{ quiz[i].user_text if quiz[i].user_text else 'Not answered or invalid' }}
                     </p>
-                    <p><strong>Correct Answer:</strong> {{ quiz[i].correct_text }}</p>
+                    <p><strong>✅ Correct Answer:</strong> {{ quiz[i].correct_text }}</p>
                 {% endif %}
             </div>
         {% endfor %}
@@ -87,7 +150,7 @@
             </div>
         {% endif %}
 
-        <p style="margin-top: 40px;">✅ Thank you for completing the quiz. Your responses have been recorded.</p>
+        <p class="footer-msg">✅ Thank you for completing the quiz. Your responses have been saved successfully!</p>
     </div>
 </body>
 </html>

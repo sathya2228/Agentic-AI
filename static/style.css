@@ -1,78 +1,81 @@
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f7fa;
     margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 700px;
     padding: 20px;
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 30px;
+.card {
     background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    box-sizing: border-box;
 }
 
-h1 {
-    color: #2c3e50;
+h2 {
     text-align: center;
     margin-bottom: 30px;
+    color: #222;
+    font-size: 28px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 label {
-    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 15px;
 }
 
-input[type="text"] {
-    padding: 8px;
-    border-radius: 6px;
+input[type="text"],
+input[type="number"],
+input[type="email"] {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 15px;
     border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f7f9fc;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #FFCC00;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+    outline: none;
 }
 
 button {
-    background-color: #2ecc71;
-    color: white;
-    padding: 10px 20px;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #FFCC00;
+    color: #000;
     border: none;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
-    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #27ae60;
-}
-
-.section {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #f8f9fc;
-    border-left: 5px solid #2980b9;
-    border-radius: 10px;
-}
-
-.section h2 {
-    margin-top: 0;
-    color: #2980b9;
-}
-
-.markdown-content p, .markdown-content li {
-    line-height: 1.6;
-    font-size: 16px;
-    color: #333;
-}
-
-.markdown-content ul {
-    padding-left: 20px;
-}
-
-.markdown-content strong {
-    color: #000;
+    background-color: #e6b800;
 }
